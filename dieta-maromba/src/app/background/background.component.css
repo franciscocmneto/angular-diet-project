@@ -1,4 +1,30 @@
 
+hr{
+  width: 70%;
+  margin-left: 0%;
+}
+
+.titulo-container{
+  width: 100%;
+  
+}
+
+.btn-add {
+  background-color: #D32F2F;
+  width: 40px;
+  height: 40px;
+  margin-right: 5%;
+  border: none;
+  border-radius: 20%;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  font-size:large;
+}
+
 
 .default_30-1240 {
     display: flex;
