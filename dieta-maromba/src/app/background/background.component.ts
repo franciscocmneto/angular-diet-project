@@ -42,16 +42,36 @@ export class BackgroundComponent {
         break;
     }
 
-   
     this.refeicoesDoDia.push(novaRefeicao);
-
-    // total de calorias
     this.totalCalorias += this.novaRefeicaoCalorias;
 
-    
     this.novaRefeicaoNome = '';
     this.novaRefeicaoCalorias = 0;
     this.novaRefeicaoImagem = null;
+  }
+
+  excluirRefeicao(refeicao: any) {
+    if (this.refeicaoSelecionada === 'Café da manhã') {
+      this.cafeDaManha = this.cafeDaManha.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Almoço') {
+      this.almoco = this.almoco.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Janta') {
+      this.janta = this.janta.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Lanches/Outros') {
+      this.lanches = this.lanches.filter(r => r !== refeicao);
+    }
+
+    this.refeicoesDoDia = this.refeicoesDoDia.filter(r => r !== refeicao);
+    this.totalCalorias -= refeicao.calorias;
+  }
+
+  excluirTodos() {
+    this.cafeDaManha = [];
+    this.almoco = [];
+    this.janta = [];
+    this.lanches = [];
+    this.refeicoesDoDia = [];
+    this.totalCalorias = 0;
   }
 
   onFileChange(event: any) {

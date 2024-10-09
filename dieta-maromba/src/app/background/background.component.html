@@ -1,25 +1,26 @@
 <div class="default_30-1240">
   <div class="navbar">
-    <span class="text-app-maromba_32-834">App Maromba</span>
+    <span class="text-app-maromba_32-834">Web Maromba</span>
   </div>
 
   <div class="body">
     <div class="left-content_30-1244">
       <div class="content-card_30-1245">
         <div class="titulo-container">
-          <h1>Refeições de Hoje</h1>
+          <h1>Controle de Refições</h1>
           <hr />
         </div>
 
         <div>
-          <label for="refeicao">Selecione a refeição:</label>
+          
           <select [(ngModel)]="refeicaoSelecionada" id="refeicao">
             <option *ngFor="let refeicao of refeicoes" [value]="refeicao">{{ refeicao }}</option>
           </select>
         </div>
 
         <div class="titulo-container">
-          <h2>{{ refeicaoSelecionada }}</h2>
+          <!-- <h2>{{ refeicaoSelecionada }}</h2> -->
+           <br>
           <hr />
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <input [(ngModel)]="novaRefeicaoNome" placeholder="Nome da refeição" />
@@ -41,10 +42,12 @@
                                    refeicaoSelecionada === 'Almoço' ? almoco : 
                                    refeicaoSelecionada === 'Janta' ? janta : 
                                    lanches)">
-                <img [src]="r.imagem" alt="{{ r.nome }}" style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;" />
+                <img [src]="r.imagem" alt="{{ r.nome }}"  />
                 {{ r.nome }} - {{ r.calorias }} calorias
+                <button class="btn-excluir"  (click)="excluirRefeicao(r)">X</button>
               </li>
             </ul>
+            
           </div>
         </div>
       </div>
@@ -52,17 +55,25 @@
 
     <div class="right-content_30-1294">
       <div class="consumo-total_30-1351">
-        <h2>Consumo Total de Calorias: {{ totalCalorias }}</h2>
+        <h2>Calorias totais: </h2>
+        <p style="margin-top: 0%; color: #D32F2F; font-weight: bold; font-size: larger; font-family: Helvetica;">
+          {{ totalCalorias }}  Kcal
+        </p>
+
       </div>
       <div class="calend-rio_30-1295">
-        <h2 style="margin-left: 5%;">Refeições totais :</h2>
+        <div style="display: flex; justify-content: space-between;">
+        <h2 style="margin-left: 1%;">Consumo totais :</h2>
+        <button class="btn-excluir" (click)="excluirTodos()">Excluir</button>
+        </div>
         <hr>
         <ul>
           <li *ngFor="let refeicao of refeicoesDoDia">
-            <img [src]="refeicao.imagem" alt="{{ refeicao.nome }}" style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;" />
+            <img [src]="refeicao.imagem" alt="{{ refeicao.nome }}"  />
             {{ refeicao.nome }} - {{ refeicao.calorias }} calorias
           </li>
         </ul>
+       
       </div>
     </div>
     
