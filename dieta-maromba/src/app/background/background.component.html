@@ -2,9 +2,11 @@
   <div class="navbar">
     <span class="text-app-maromba_32-834">App Maromba</span>
     <div class="bot-o_32-844">
-      <span class="text-name-sample_32-846">Home</span>
+     
+
     </div>
   </div>
+  
   <div class="body">
     <div class="left-content_30-1244">
       <div class="content-card_30-1245">
@@ -12,22 +14,28 @@
           <h1>Refeições de Hoje</h1>
           <hr />
         </div>
-        <div *ngFor= "let refeicao of refeicoes" class="titulo-container">
+        
+        <div *ngFor="let refeicao of refeicoes" class="titulo-container">
           <h2>{{ refeicao }}</h2>
           <hr />
           <div style="display: flex; justify-content: space-between;">
             <p>Nenhuma refeição adicionada hoje</p>
-            <button type="button" class="btn-add" > + </button>
-
+            <button 
+              type="button" 
+              class="btn-add" 
+              [routerLink]="['/adicionar-refeicao', refeicao]">
+              +
+            </button>
           </div>
-          
           <br />
           <hr />
         </div>
+        
       </div>
     </div>
+    
     <div class="right-content_30-1294">
-      <div class="calend-rio_30-1295"></div> 
+      <div class="calend-rio_30-1295"></div>
       <div class="consumo-total_30-1351"></div>
     </div>
   </div>

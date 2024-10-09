@@ -1,20 +1,27 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-refeicao',
   templateUrl: './refeicao.component.html',
-  styleUrl: './refeicao.component.css'
+  styleUrls: ['./refeicao.component.css']
 })
-export class RefeicaoComponent {
-  
+export class RefeicaoComponent implements OnInit {
+  tipoRefeicao: string = '';
+
   constructor(
+    private route: ActivatedRoute,
     private location: Location
-  ){}
+  ) {}
 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.tipoRefeicao = params.get('tipoRefeicao') || '';
+    });
+  }
 
-add(): void{
-  this.location.back();
-}
-
+  add(): void {
+    this.location.back();
+  }
 }

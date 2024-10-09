@@ -6,8 +6,11 @@ import { BackgroundComponent } from './background/background.component';
 const routes: Routes = [
   {path: 'background', component: BackgroundComponent},
   {path: '', redirectTo: '/background', pathMatch: 'full'},
-  {path: 'refeicao', component: RefeicaoComponent}
+  {path: 'refeicao', component: RefeicaoComponent},
+  { path: 'adicionar-refeicao/:tipoRefeicao', component: RefeicaoComponent }
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
