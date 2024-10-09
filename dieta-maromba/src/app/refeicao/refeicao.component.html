@@ -1,31 +1,33 @@
 <div class="header">
-  <div class="logo">
-    <span>App Maromba</span>
+    <div class="logo">
+      <img src="/dieta-maromba/src/imgs/background.png" alt="Logo do App Maromba">
+      <span>App Maromba</span>
+    </div>
+    <button class="home-button" [routerLink]="['/background']">Home</button>
   </div>
-  <button class="home-button" [routerLink]="['/background']">Home</button>
+  <div class="espaco"></div>
+  <div class="content">
+    <div class="card">
+      <h2>☕ Café da Manhã</h2>
+      <form>
+        <div class="input-group">
+          <label for="nome">Refeição</label>
+          <input type="text" id="nome" placeholder="Descrição da Refeição">
+        </div>
+        <div class="input-group">
+          <label for="calorias">Calorias (Kcal)</label>
+          <input type="number" id="calorias" placeholder="0">
+        </div>
+        <div class="upload-image">
+          <label for="imagem" class="upload-label">
+            <input type="file" id="imagem" accept="image/*">
+            <div class="upload-placeholder">
+              <span>Clique aqui para adicionar uma imagem</span>
+            </div>
+          </label>
+        </div>
+        <button type="button" class="add-button" >Adicionar</button>
+      </form>
+    </div>
+  </div>  
 
-</div>
-<div class="content">
-  <div class="card">
-    <h2>☕ {{ tipoRefeicao }}</h2> 
-    <form>
-      <div class="input-group">
-        <label for="nome">Refeição</label>
-        <input type="text" id="nome" placeholder="Descrição da Refeição">
-      </div>
-      <div class="input-group">
-        <label for="calorias">Calorias (Kcal)</label>
-        <input type="number" id="calorias" placeholder="0">
-      </div>
-      <div class="upload-image">
-        <label for="imagem" class="upload-label">
-          <input type="file" id="imagem" accept="image/*">
-          <div class="upload-placeholder">
-            <span>Clique aqui para adicionar uma imagem</span>
-          </div>
-        </label>
-      </div>
-      <button type="button" class="add-button" (click)="add()">Adicionar</button>
-    </form>
-  </div>
-</div>

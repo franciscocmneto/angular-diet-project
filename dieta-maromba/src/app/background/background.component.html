@@ -1,10 +1,8 @@
 <div class="default_30-1240">
   <div class="navbar">
     <span class="text-app-maromba_32-834">App Maromba</span>
-    <div class="bot-o_32-844">
-    </div>
   </div>
-  
+
   <div class="body">
     <div class="left-content_30-1244">
       <div class="content-card_30-1245">
@@ -12,29 +10,61 @@
           <h1>Refeições de Hoje</h1>
           <hr />
         </div>
-        
-        <div *ngFor="let refeicao of refeicoes" class="titulo-container">
-          <h2>{{ refeicao }}</h2>
+
+        <div>
+          <label for="refeicao">Selecione a refeição:</label>
+          <select [(ngModel)]="refeicaoSelecionada" id="refeicao">
+            <option *ngFor="let refeicao of refeicoes" [value]="refeicao">{{ refeicao }}</option>
+          </select>
+        </div>
+
+        <div class="titulo-container">
+          <h2>{{ refeicaoSelecionada }}</h2>
           <hr />
-          <div style="display: flex; justify-content: space-between;">
-            <p>Nenhuma refeição adicionada hoje</p>
-            <button 
-              type="button" 
-              class="btn-add" 
-              [routerLink]="['/adicionar-refeicao', refeicao]">
-              +
-            </button>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <input [(ngModel)]="novaRefeicaoNome" placeholder="Nome da refeição" />
+            <input [(ngModel)]="novaRefeicaoCalorias" type="number" placeholder="Calorias" />
+            
+            
+            <label class="custom-file-upload">
+              <input type="file" (change)="onFileChange($event)" accept="image/*" />
+              Selecionar Imagem
+            </label>
+            
+            <button type="button" class="btn-enviar" (click)="adicionarRefeicao()">+</button>
           </div>
           <br />
           <hr />
+          <div>
+            <ul>
+              <li *ngFor="let r of (refeicaoSelecionada === 'Café da manhã' ? cafeDaManha : 
+                                   refeicaoSelecionada === 'Almoço' ? almoco : 
+                                   refeicaoSelecionada === 'Janta' ? janta : 
+                                   lanches)">
+                <img [src]="r.imagem" alt="{{ r.nome }}" style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;" />
+                {{ r.nome }} - {{ r.calorias }} calorias
+              </li>
+            </ul>
+          </div>
         </div>
-        
+      </div>
+    </div>
+
+    <div class="right-content_30-1294">
+      <div class="consumo-total_30-1351">
+        <h2>Consumo Total de Calorias: {{ totalCalorias }}</h2>
+      </div>
+      <div class="calend-rio_30-1295">
+        <h2 style="margin-left: 5%;">Refeições totais :</h2>
+        <hr>
+        <ul>
+          <li *ngFor="let refeicao of refeicoesDoDia">
+            <img [src]="refeicao.imagem" alt="{{ refeicao.nome }}" style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;" />
+            {{ refeicao.nome }} - {{ refeicao.calorias }} calorias
+          </li>
+        </ul>
       </div>
     </div>
     
-    <div class="right-content_30-1294">
-      <div class="calend-rio_30-1295"></div>
-      <div class="consumo-total_30-1351"></div>
-    </div>
   </div>
 </div>

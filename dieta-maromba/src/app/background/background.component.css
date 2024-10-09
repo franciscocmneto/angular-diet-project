@@ -1,38 +1,52 @@
-hr{
-  width: 70%;
+hr {
+  width: 100%;
   margin-left: 0%;
 }
 
-.titulo-container{
+.titulo-container {
   width: 100%;
-  
 }
 
-.btn-add {
+.btn-enviar {
   background-color: #D32F2F;
-  width: 40px;
+  width: 50px;
   height: 40px;
   margin-right: 5%;
   border: none;
-  border-radius: 20%;
+  border-radius: 10%;
   color: white;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   padding: 0;
-  font-size:large;
+  font-size: large;
 }
 
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #545454; 
+  color: rgb(255, 255, 255); 
+  border-radius: 4px; 
+  margin-right: 5%;
+  font-size: 14px; 
+}
+
+.custom-file-upload input[type="file"] {
+  display: none; 
+}
 
 .default_30-1240 {
-    display: flex;
-    width: 100%;
-    height: 1024px;
-    flex-direction: column;
-    align-items: flex-start;
-    background: #2C2C2C;
+  display: flex;
+  width: 100%;
+  height: 1024px;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #2C2C2C;
 }
+
 .navbar {
   padding: 8px 32px 8px 32px;
   display: flex;
@@ -47,6 +61,7 @@ hr{
   height: 74px;
   width: -webkit-fill-available;
 }
+
 .text-app-maromba_32-834 {
   color: #ffffff;
   font-size: 36px;
@@ -58,7 +73,6 @@ hr{
   text-wrap: wrap;
   width: -webkit-fill-available;
 }
-
 
 .x--cones_32-845 {
   width: 24px;
@@ -88,6 +102,7 @@ hr{
   width: -webkit-fill-available;
   height: 100%;
 }
+
 .left-content_30-1244 {
   padding: 32px;
   display: flex;
@@ -101,6 +116,7 @@ hr{
   width: -webkit-fill-available;
   height: 100%;
 }
+
 .content-card_30-1245 {
   padding: 16px;
   display: flex;
@@ -134,12 +150,12 @@ hr{
   width: -webkit-fill-available;
   height: 100%;
 }
+
 .calend-rio_30-1295 {
   display: flex;
+  padding: 30px;
   flex-direction: column;
-  justify-content: flex-start;
   flex-wrap: nowrap;
-  align-items: flex-start;
   gap: 10px;
   box-sizing: border-box;
   overflow: hidden;
