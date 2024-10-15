@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Cafe, Almoco, Janta, Lanches } from '../refeicao';
+import { CAFE, ALMOCO, JANTA, LANCHES } from '../mock-refeicao';
 
 @Component({
   selector: 'app-background',
@@ -12,13 +14,13 @@ export class BackgroundComponent {
   novaRefeicaoCalorias: number = 0;
   novaRefeicaoImagem: string | ArrayBuffer | null = null;
 
-  // refeições  do dia
-  cafeDaManha: any[] = [];
-  almoco: any[] = [];
-  janta: any[] = [];
-  lanches: any[] = [];
+  cafeDaManha: Cafe[] = CAFE;
+  almoco: Almoco[] = ALMOCO;
+  janta: Janta[] = JANTA;
+  lanches: Lanches[] = LANCHES;
+
   totalCalorias: number = 0;
-  refeicoesDoDia: any[] = []; 
+  refeicoesDoDia: any[] = [];
 
   adicionarRefeicao() {
     const novaRefeicao = {
@@ -78,7 +80,7 @@ export class BackgroundComponent {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      this.novaRefeicaoImagem = reader.result; 
+      this.novaRefeicaoImagem = reader.result;
     };
     reader.readAsDataURL(file);
   }
