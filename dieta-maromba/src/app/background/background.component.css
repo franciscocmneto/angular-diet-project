@@ -13,43 +13,33 @@ img{
   width: 100%;
 }
 
+
+input {
+  margin-right: 10px; 
+}
+
+
 select{
-  background-color:#D32F2F;
+  background-color:#545454;
   color: white;
   border: none;
   padding: 10px;
   font-size: large;
 }
 
-.btn-enviar {
+.btn {
   background-color: #D32F2F;
-  width: 50px;
-  height: 40px;
+  width: auto;
+  height: auto;
   margin-right: 5%;
   border: none;
-  border-radius: 10%;
   color: white;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0;
+  padding: 10px;
   font-size: large;
-}
-.btn-excluir {
-  background-color: #D32F2F;
-  width: 50px;
-  height: 40px;
-  margin-right: 5%;
-  margin-top: 1%;
-  border: none;
-  border-radius: 10%;
-  color: white;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 0;
 }
 
 .custom-file-upload {

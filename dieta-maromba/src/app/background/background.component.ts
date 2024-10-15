@@ -1,32 +1,75 @@
 import { Component } from '@angular/core';
-import { Cafe, Almoco, Janta, Lanches } from '../refeicao';
-import { CAFE, ALMOCO, JANTA, LANCHES } from '../mock-refeicao';
+
+interface Ingrediente {
+  nome: string;
+  calorias: number;
+}
+
+interface Refeicao {
+  nome: string;
+  ingredientes: Ingrediente[];
+  imagem?: string | ArrayBuffer | null;
+  calorias: number; // Soma 
+}
 
 @Component({
   selector: 'app-background',
   templateUrl: './background.component.html',
-  styleUrls: ['./background.component.css']
+  styleUrls: ['./background.component.css'],
 })
 export class BackgroundComponent {
-  refeicoes: string[] = ['Café da manhã', 'Almoço', 'Janta', 'Lanches/Outros'];
-  refeicaoSelecionada: string = this.refeicoes[0];
-  novaRefeicaoNome: string = '';
-  novaRefeicaoCalorias: number = 0;
-  novaRefeicaoImagem: string | ArrayBuffer | null = null;
+  refeicoes = ['Café da manhã', 'Almoço', 'Janta', 'Lanche'];
+  refeicaoSelecionada = 'Café da manhã';
+  novaRefeicaoNome = '';
+  novoIngredienteNome = '';
+  novoIngredienteCalorias = 0;
+  ingredientes: Ingrediente[] = [];
+  totalCalorias = 0;
+  imagemDaRefeicao: string | ArrayBuffer | null = null; 
 
-  cafeDaManha: Cafe[] = CAFE;
-  almoco: Almoco[] = ALMOCO;
-  janta: Janta[] = JANTA;
-  lanches: Lanches[] = LANCHES;
+ 
+  cafeDaManha: Refeicao[] = [];
+  almoco: Refeicao[] = [];
+  janta: Refeicao[] = [];
+  lanches: Refeicao[] = [];
+  refeicoesDoDia: Refeicao[] = [];
 
-  totalCalorias: number = 0;
-  refeicoesDoDia: any[] = [];
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => (this.imagemDaRefeicao = reader.result as string);
+    reader.readAsDataURL(file);
+  }
+
+  adicionarIngrediente() {
+    if (!this.novoIngredienteNome || this.novoIngredienteCalorias <= 0) {
+      alert('Por favor, preencha o nome do ingrediente e as calorias.');
+      return; 
+    }
+
+    const ingrediente: Ingrediente = {
+      nome: this.novoIngredienteNome,
+      calorias: this.novoIngredienteCalorias,
+    };
+
+    this.ingredientes.push(ingrediente);
+    this.novoIngredienteNome = '';
+    this.novoIngredienteCalorias = 0;
+  }
 
   adicionarRefeicao() {
-    const novaRefeicao = {
+    if (!this.novaRefeicaoNome || !this.imagemDaRefeicao || this.ingredientes.length === 0) {
+      alert('Por favor, preencha o nome da refeição, selecione uma imagem e adicione pelo menos um ingrediente.');
+      return; 
+    }
+
+    const caloriasTotais = this.ingredientes.reduce((total, ing) => total + ing.calorias, 0);
+
+    const novaRefeicao: Refeicao = {
       nome: this.novaRefeicaoNome,
-      calorias: this.novaRefeicaoCalorias,
-      imagem: this.novaRefeicaoImagem
+      ingredientes: [...this.ingredientes],
+      imagem: this.imagemDaRefeicao,
+      calorias: caloriasTotais,
     };
 
     switch (this.refeicaoSelecionada) {
@@ -39,32 +82,26 @@ export class BackgroundComponent {
       case 'Janta':
         this.janta.push(novaRefeicao);
         break;
-      case 'Lanches/Outros':
+      case 'Lanche':
         this.lanches.push(novaRefeicao);
         break;
     }
 
     this.refeicoesDoDia.push(novaRefeicao);
-    this.totalCalorias += this.novaRefeicaoCalorias;
+    this.atualizarCaloriasTotais();
 
     this.novaRefeicaoNome = '';
-    this.novaRefeicaoCalorias = 0;
-    this.novaRefeicaoImagem = null;
+    this.ingredientes = [];
+    this.imagemDaRefeicao = null; 
   }
 
-  excluirRefeicao(refeicao: any) {
-    if (this.refeicaoSelecionada === 'Café da manhã') {
-      this.cafeDaManha = this.cafeDaManha.filter(r => r !== refeicao);
-    } else if (this.refeicaoSelecionada === 'Almoço') {
-      this.almoco = this.almoco.filter(r => r !== refeicao);
-    } else if (this.refeicaoSelecionada === 'Janta') {
-      this.janta = this.janta.filter(r => r !== refeicao);
-    } else if (this.refeicaoSelecionada === 'Lanches/Outros') {
-      this.lanches = this.lanches.filter(r => r !== refeicao);
-    }
+  atualizarCaloriasTotais() {
+    this.totalCalorias = this.refeicoesDoDia.reduce((total, refeicao) => total + refeicao.calorias, 0);
+  }
 
+  excluirRefeicao(refeicao: Refeicao) {
     this.refeicoesDoDia = this.refeicoesDoDia.filter(r => r !== refeicao);
-    this.totalCalorias -= refeicao.calorias;
+    this.atualizarCaloriasTotais();
   }
 
   excluirTodos() {
@@ -74,14 +111,5 @@ export class BackgroundComponent {
     this.lanches = [];
     this.refeicoesDoDia = [];
     this.totalCalorias = 0;
-  }
-
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.novaRefeicaoImagem = reader.result;
-    };
-    reader.readAsDataURL(file);
   }
 }

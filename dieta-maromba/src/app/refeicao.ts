@@ -1,5 +1,11 @@
+export interface Ingrediente {
+    nome: string;
+    calorias: number;
+  }
+
 export interface Refeicao {
     nome: string;
+    ingredientes: Ingrediente[]; 
     calorias: number;
     imagem?: string | ArrayBuffer | null;
  }

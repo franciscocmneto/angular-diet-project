@@ -7,75 +7,109 @@
     <div class="left-content_30-1244">
       <div class="content-card_30-1245">
         <div class="titulo-container">
-          <h1>Controle de Refições</h1>
-          <hr />
+          <h1>Controle de Refeições</h1>
+         
         </div>
 
-        <div>
-          
+        <div class="select-container">
           <select [(ngModel)]="refeicaoSelecionada" id="refeicao">
-            <option *ngFor="let refeicao of refeicoes" [value]="refeicao">{{ refeicao }}</option>
+            <option *ngFor="let refeicao of refeicoes" [value]="refeicao">
+              {{ refeicao }}
+            </option>
           </select>
         </div>
 
-        <div class="titulo-container">
-          <!-- <h2>{{ refeicaoSelecionada }}</h2> -->
-           <br>
-          <hr />
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <input [(ngModel)]="novaRefeicaoNome" placeholder="Nome da refeição" />
-            <input [(ngModel)]="novaRefeicaoCalorias" type="number" placeholder="Calorias" />
-            
-            
-            <label class="custom-file-upload">
-              <input type="file" (change)="onFileChange($event)" accept="image/*" />
-              Selecionar Imagem
-            </label>
-            
-            <button type="button" class="btn-enviar" (click)="adicionarRefeicao()">+</button>
+        <hr />
+       <!-- NOME DA REFEIÇÃO -->
+        <div class="input-container">
+          <input 
+            [(ngModel)]="novaRefeicaoNome" 
+            placeholder="Nome da refeição" 
+            aria-label="Nome da Refeição" 
+          />
+          <label class="custom-file-upload">
+            <input 
+              type="file" 
+              (change)="onFileChange($event)" 
+              accept="image/*" 
+            />
+            Selecionar Imagem
+          </label>
+
+
+        <!-- INGREDIENTES DA REFEIÇÃO -->
+          <div class="ingrediente-container">
+            <h2>Adicionar Ingrediente</h2>
+            <input 
+              [(ngModel)]="novoIngredienteNome" 
+              placeholder="Nome do ingrediente" 
+              aria-label="Nome do Ingrediente" 
+            />
+            <input 
+              [(ngModel)]="novoIngredienteCalorias" 
+              type="number" 
+              placeholder="Calorias" 
+              aria-label="Calorias" 
+            />
+            <button 
+              (click)="adicionarIngrediente()"
+              [disabled]="!novoIngredienteNome || novoIngredienteCalorias <= 0">Adicionar Ingrediente
+            </button>
           </div>
-          <br />
-          <hr />
-          <div>
-            <ul>
-              <li *ngFor="let r of (refeicaoSelecionada === 'Café da manhã' ? cafeDaManha : 
-                                   refeicaoSelecionada === 'Almoço' ? almoco : 
-                                   refeicaoSelecionada === 'Janta' ? janta : 
-                                   lanches)">
-                <img [src]="r.imagem" alt="{{ r.nome }}"  />
-                {{ r.nome }} - {{ r.calorias }} calorias
-                <button class="btn-excluir"  (click)="excluirRefeicao(r)">X</button>
-              </li>
-            </ul>
-            
-          </div>
+
+          <h3 *ngIf="ingredientes.length > 0" >Ingredientes Adicionados:</h3>
+          <ul>
+            <li *ngFor="let ingrediente of ingredientes">
+              {{ ingrediente.nome }} - {{ ingrediente.calorias }} calorias
+            </li>
+          </ul>
+
+          <button 
+            type="button" 
+            class="btn" 
+            (click)="adicionarRefeicao()"
+            [disabled]="!novaRefeicaoNome || !imagemDaRefeicao || ingredientes.length === 0">Adicionar Refeição
+          </button>
         </div>
+
+        <hr />
+
+        <ul>
+          <li 
+            *ngFor="let r of (refeicaoSelecionada === 'Café da manhã' ? cafeDaManha :
+                             refeicaoSelecionada === 'Almoço' ? almoco :
+                             refeicaoSelecionada === 'Janta' ? janta : lanches)">
+            <img [src]="r.imagem" alt="{{ r.nome }}" class="refeicao-imagem" />
+            <span>{{ r.nome }} - {{ r.calorias }} calorias</span>
+            <button class="btn" (click)="excluirRefeicao(r)">X</button>
+          </li>
+        </ul>
       </div>
     </div>
+
 
     <div class="right-content_30-1294">
       <div class="consumo-total_30-1351">
-        <h2>Calorias totais: </h2>
-        <p style="margin-top: 0%; color: #D32F2F; font-weight: bold; font-size: larger; font-family: Helvetica;">
-          {{ totalCalorias }}  Kcal
+        <h2>Calorias totais:</h2>
+        <p class="total-calorias">
+          {{ totalCalorias }} Kcal
         </p>
-
       </div>
+
       <div class="calend-rio_30-1295">
-        <div style="display: flex; justify-content: space-between;">
-        <h2 style="margin-left: 1%;">Consumo totais :</h2>
-        <button class="btn-excluir" (click)="excluirTodos()">Excluir</button>
+        <div class="header-consumo">
+          <h2>Consumo Total:</h2>
+          <button class="btn" (click)="excluirTodos()">Excluir Tudo</button>
         </div>
-        <hr>
+        <hr />
+
         <ul>
           <li *ngFor="let refeicao of refeicoesDoDia">
-            <img [src]="refeicao.imagem" alt="{{ refeicao.nome }}"  />
-            {{ refeicao.nome }} - {{ refeicao.calorias }} calorias
+            <img [src]="refeicao.imagem" alt="{{ refeicao.nome }}" class="refeicao-imagem" />
+            <span>{{ refeicao.nome }} - {{ refeicao.calorias }} calorias</span>
           </li>
         </ul>
-       
       </div>
     </div>
-    
   </div>
 </div>
