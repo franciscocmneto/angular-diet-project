@@ -27,12 +27,14 @@ export class BackgroundComponent {
   totalCalorias = 0;
   imagemDaRefeicao: string | ArrayBuffer | null = null; 
 
- 
   cafeDaManha: Refeicao[] = [];
   almoco: Refeicao[] = [];
   janta: Refeicao[] = [];
   lanches: Refeicao[] = [];
   refeicoesDoDia: Refeicao[] = [];
+  
+  historicoDias: { data: string; calorias: number }[] = []; 
+  dataSelecionada = ''; 
 
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -100,7 +102,18 @@ export class BackgroundComponent {
   }
 
   excluirRefeicao(refeicao: Refeicao) {
+    if (this.refeicaoSelecionada === 'Café da manhã') {
+      this.cafeDaManha = this.cafeDaManha.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Almoço') {
+      this.almoco = this.almoco.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Janta') {
+      this.janta = this.janta.filter(r => r !== refeicao);
+    } else if (this.refeicaoSelecionada === 'Lanches') {
+      this.lanches = this.lanches.filter(r => r !== refeicao);
+    }
+  
     this.refeicoesDoDia = this.refeicoesDoDia.filter(r => r !== refeicao);
+  
     this.atualizarCaloriasTotais();
   }
 
@@ -111,5 +124,14 @@ export class BackgroundComponent {
     this.lanches = [];
     this.refeicoesDoDia = [];
     this.totalCalorias = 0;
+  }
+
+  salvarHistorico() {
+    if (this.dataSelecionada) {
+      this.historicoDias.push({ data: this.dataSelecionada, calorias: this.totalCalorias });
+      this.dataSelecionada = ''; 
+    } else {
+      alert('Por favor, selecione uma data antes de salvar.');
+    }
   }
 }

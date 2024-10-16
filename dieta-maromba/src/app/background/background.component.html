@@ -1,16 +1,25 @@
 <div class="default_30-1240">
+  <!-- Navbar -->
   <div class="navbar">
     <span class="text-app-maromba_32-834">Web Maromba</span>
   </div>
 
   <div class="body">
+    <!-- Esquerda -->
     <div class="left-content_30-1244">
       <div class="content-card_30-1245">
         <div class="titulo-container">
           <h1>Controle de Refeições</h1>
-         
         </div>
-
+        
+        <input 
+          type="date" 
+          [(ngModel)]="dataSelecionada" 
+          placeholder="Selecione uma data" 
+          aria-label="Data" 
+        />
+        
+        <!-- Seleção de Refeição -->
         <div class="select-container">
           <select [(ngModel)]="refeicaoSelecionada" id="refeicao">
             <option *ngFor="let refeicao of refeicoes" [value]="refeicao">
@@ -20,88 +29,102 @@
         </div>
 
         <hr />
-       <!-- NOME DA REFEIÇÃO -->
-        <div class="input-container">
+
+        <!-- Ingredientes da Refeição -->
+        <div class="ingrediente-container">
+          <h2>Adicionar Ingrediente</h2>
           <input 
-            [(ngModel)]="novaRefeicaoNome" 
-            placeholder="Nome da refeição" 
-            aria-label="Nome da Refeição" 
+            [(ngModel)]="novoIngredienteNome" 
+            placeholder="Nome do ingrediente" 
+            aria-label="Nome do Ingrediente" 
           />
-          <label class="custom-file-upload">
-            <input 
-              type="file" 
-              (change)="onFileChange($event)" 
-              accept="image/*" 
-            />
-            Selecionar Imagem
-          </label>
-
-
-        <!-- INGREDIENTES DA REFEIÇÃO -->
-          <div class="ingrediente-container">
-            <h2>Adicionar Ingrediente</h2>
-            <input 
-              [(ngModel)]="novoIngredienteNome" 
-              placeholder="Nome do ingrediente" 
-              aria-label="Nome do Ingrediente" 
-            />
-            <input 
-              [(ngModel)]="novoIngredienteCalorias" 
-              type="number" 
-              placeholder="Calorias" 
-              aria-label="Calorias" 
-            />
-            <button 
-              (click)="adicionarIngrediente()"
-              [disabled]="!novoIngredienteNome || novoIngredienteCalorias <= 0">Adicionar Ingrediente
-            </button>
-          </div>
-
-          <h3 *ngIf="ingredientes.length > 0" >Ingredientes Adicionados:</h3>
-          <ul>
-            <li *ngFor="let ingrediente of ingredientes">
-              {{ ingrediente.nome }} - {{ ingrediente.calorias }} calorias
-            </li>
-          </ul>
-
+          <input 
+            [(ngModel)]="novoIngredienteCalorias" 
+            type="number" 
+            placeholder="Calorias" 
+            aria-label="Calorias" 
+          />
           <button 
-            type="button" 
-            class="btn" 
-            (click)="adicionarRefeicao()"
-            [disabled]="!novaRefeicaoNome || !imagemDaRefeicao || ingredientes.length === 0">Adicionar Refeição
+            (click)="adicionarIngrediente()"
+            [disabled]="!novoIngredienteNome || novoIngredienteCalorias <= 0">
+            Adicionar Ingrediente
           </button>
         </div>
 
-        <hr />
-
+        <!-- Lista de Ingredientes Adicionados -->
+        <h3 *ngIf="ingredientes.length > 0">Ingredientes Adicionados:</h3>
         <ul>
-          <li 
-            *ngFor="let r of (refeicaoSelecionada === 'Café da manhã' ? cafeDaManha :
-                             refeicaoSelecionada === 'Almoço' ? almoco :
-                             refeicaoSelecionada === 'Janta' ? janta : lanches)">
-            <img [src]="r.imagem" alt="{{ r.nome }}" class="refeicao-imagem" />
-            <span>{{ r.nome }} - {{ r.calorias }} calorias</span>
-            <button class="btn" (click)="excluirRefeicao(r)">X</button>
+          <li *ngFor="let ingrediente of ingredientes">
+            {{ ingrediente.nome }} - {{ ingrediente.calorias }} calorias
           </li>
         </ul>
+
+        <!-- Nome da Refeição -->
+        <div class="input-container">
+          <br><br><br>  
+          <input [(ngModel)]="novaRefeicaoNome" placeholder="Nome da refeição" aria-label="Nome da Refeição" />
+          <label class="custom-file-upload">
+            <input type="file" (change)="onFileChange($event)" accept="image/*" /> Selecionar Imagem
+          </label>
+          <button  type="button" class="btn" (click)="adicionarRefeicao()" 
+            [disabled]="!novaRefeicaoNome || !imagemDaRefeicao || ingredientes.length === 0">   Adicionar Refeição
+          </button>
+
+        </div>
+        <hr />
+
+        <!-- Lista de Refeições -->
+      <div style="display: flex;">
+        <ul class="refeicao-lista">
+          <li 
+            *ngFor="let r of (refeicaoSelecionada === 'Café da manhã' ? cafeDaManha :
+                  refeicaoSelecionada === 'Almoço' ? almoco :
+                  refeicaoSelecionada === 'Janta' ? janta : lanches)">
+          <img [src]="r.imagem" alt="{{ r.nome }}" class="refeicao-imagem" />
+          <span>{{ r.nome }} - {{ r.calorias }} calorias</span>
+          <button class="btn" (click)="excluirRefeicao(r)">X</button>
+          </li>
+        </ul>
+      </div>
+
       </div>
     </div>
 
 
+    <!--  Direita -->
     <div class="right-content_30-1294">
+      
+      <!-- Historico -->
+      <div class="consumo-total_30-1351">
+        <div style="display: flex; justify-content: space-between;">
+          <h2>Historico de Dias:</h2>
+          <button class="btn"  (click)="salvarHistorico()">Salvar</button>
+        </div>
+        
+        <ul>
+          <li *ngFor="let dia of historicoDias">
+            {{ dia.data }} - {{ dia.calorias }} Kcal
+          </li>
+        </ul>
+      </div>
+
+      <!-- Calorias -->
+
       <div class="consumo-total_30-1351">
         <h2>Calorias totais:</h2>
-        <p class="total-calorias">
+        <p style="margin-top: 0%; color: #D32F2F; font-weight: bold; font-size: larger; font-family: Helvetica;">
           {{ totalCalorias }} Kcal
         </p>
       </div>
+    
 
       <div class="calend-rio_30-1295">
-        <div class="header-consumo">
+        <div style="display: flex; justify-content: space-between;">
           <h2>Consumo Total:</h2>
+          
           <button class="btn" (click)="excluirTodos()">Excluir Tudo</button>
         </div>
-        <hr />
+        
 
         <ul>
           <li *ngFor="let refeicao of refeicoesDoDia">
