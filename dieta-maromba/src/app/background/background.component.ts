@@ -1,16 +1,6 @@
 import { Component } from '@angular/core';
-
-interface Ingrediente {
-  nome: string;
-  calorias: number;
-}
-
-interface Refeicao {
-  nome: string;
-  ingredientes: Ingrediente[];
-  imagem?: string | ArrayBuffer | null;
-  calorias: number; // Soma 
-}
+import { Refeicao } from '../refeicao';
+import { Ingrediente } from '../ingrediente';
 
 @Component({
   selector: 'app-background',
